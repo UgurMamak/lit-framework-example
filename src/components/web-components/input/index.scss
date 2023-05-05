@@ -1,0 +1,27 @@
+@import './../_mixins/size/';
+@import './../_mixins/appearance/';
+@import './../_mixins/error-label/';
+@import './../_mixins/w-full/';
+@import './../_mixins/disabled/';
+
+.pz-input {
+  @apply relative block w-max;
+
+  @include size('.input');
+  @include appearance('.input');
+  @include error-label();
+  @include w-full();
+  @include disabled();
+
+  .input {
+    @apply relative w-full;
+
+    &-icon {
+      @apply absolute-center-y right-2;
+    }
+
+    &::placeholder {
+      @apply text-sm text-gray-600;
+    }
+  }
+}

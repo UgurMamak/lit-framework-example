@@ -1,0 +1,12 @@
+@import './themes/auth';
+@import './themes/zero';
+
+.pz-tab-menu {
+  &.-theme-auth {
+    @include theme-auth();
+  }
+
+  &.-theme-zero {
+    @include theme-zero();
+  }
+}

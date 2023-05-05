@@ -1,0 +1,15 @@
+.pz-share-item {
+  .pz-button {
+    &__link {
+      @apply p-2;
+    }
+
+    &__icon {
+      @apply text-xl;
+    }
+
+    &__text {
+      @apply text-sm;
+    }
+  }
+}

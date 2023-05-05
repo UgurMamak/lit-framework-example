@@ -1,0 +1,40 @@
+@import './../../_mixins/error-label/';
+@import './../../_mixins/disabled/';
+
+.pz-radio {
+  @include error-label();
+  @include disabled();
+
+  @apply flex flex-wrap items-center w-max;
+
+  .radio {
+    @apply relative h-4 w-4 appearance-none rounded-full border border-gray-600 transition;
+    @apply hover:border-black;
+
+    &:checked {
+      @apply border-none;
+
+      &::before {
+        @apply content-empty absolute-center-x border border-black h-4 w-4 rounded-full;
+
+        background: radial-gradient(theme('colors.primary.500') 0%, theme('colors.primary.500') 50%, transparent 60%, transparent);
+      }
+    }
+  }
+
+  .label {
+    @apply flex-1;
+  }
+
+  &.-error {
+    .radio {
+      @apply border-error;
+    }
+  }
+
+  &.-labeled {
+    .radio {
+      @apply mr-2;
+    }
+  }
+}

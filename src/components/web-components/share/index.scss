@@ -1,0 +1,33 @@
+pz-share {
+  @apply flex overflow-hidden;
+  $share: &;
+
+  pz-button {
+    $button: &;
+
+    @apply p-0 w-16;
+
+    .#{$button}__text {
+      @apply text-base font-normal;
+    }
+
+    .#{$button}__icon {
+      @apply text-sm;
+    }
+  }
+
+  .#{$share}__content {
+    @apply max-w-0 bg-white origin-right transform transition-all ease-in-out opacity-0 duration-1300 z-50;
+
+    &-body {
+      @apply flex w-max;
+    }
+  }
+
+  &:focus-within {
+    .#{$share}__content {
+      @apply max-w-xs opacity-100;
+      @apply lg:flex lg:flex-row lg:ml-3;
+    }
+  }
+}

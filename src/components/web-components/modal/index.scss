@@ -1,0 +1,60 @@
+@import './themes/zero';
+@import './themes/classic';
+@import './themes/address-form';
+@import './themes/contracts';
+@import './themes/size-chart';
+
+pz-modal {
+  @apply transition duration-500 fixed top-0 left-0 bg-black bg-opacity-50 w-full h-full z-40;
+  @apply opacity-0 pointer-events-none;
+
+  &.-visible {
+    @apply opacity-100 translate-y-0 pointer-events-auto;
+
+    .pz-modal-dialog {
+      @apply -translate-y-1/2;
+    }
+  }
+
+  &.-theme-zero {
+    @include theme-zero();
+  }
+
+  &.-theme-classic {
+    @include theme-classic();
+  }
+
+  &.-theme-address-form {
+    @include theme-address-form();
+  }
+
+  &.-theme-contracts {
+    @include theme-contracts();
+  }
+
+  &.-theme-size-chart {
+    @include theme-size-chart();
+  }
+}
+
+.pz-modal-dialog {
+  @apply w-full max-w-9/10 max-h-9/10 flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 bg-white z-50 p-6 transition duration-300;
+  @apply md:w-auto;
+
+  &__header {
+    @apply w-full flex justify-items-center items-center;
+  }
+
+  &__content {
+    @apply h-auto overflow-y-auto text-center;
+  }
+
+  &__buttons {
+    @apply hidden justify-items-center mt-6;
+
+    .modal-button + .modal-button {
+      @apply mt-2;
+      @apply md:ml-8 md:mt-0;
+    }
+  }
+}
