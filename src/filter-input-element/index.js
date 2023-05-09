@@ -17,6 +17,8 @@ class FilterInputElement extends LitElement {
     const input = this.input;
     if (!input) return
 
+    this.listItemAddTextValue();
+
     input.addEventListener('input', this.boundFilterResults);
 
   }
@@ -29,6 +31,20 @@ class FilterInputElement extends LitElement {
     input.addEventListener('input', this.boundFilterResults);
   }
 
+  /* text content değerini filter-value attribute'e atama işlemi */
+  listItemAddTextValue(){
+    const containerValue = this.getAttribute('data-filter-container')
+    const container = document.querySelector(`[data-filter-id="${containerValue}"]`);
+
+    const listContainer = container.hasAttribute('[data-filter-list]')
+      ? container
+      : container.querySelector('[data-filter-list]');
+
+
+    for (const item of Array.from(listContainer.children)){
+      item.setAttribute('filter-value',item.textContent);
+    }
+  }
 
   /*
     get key'i ile component içinde kullanabilceğimiz state'ler oluşturabiliriz.
@@ -69,10 +85,24 @@ async function filterResults(filterInput, check) {
     const result = filterEvent(item, itemText, searchText);
     item.hidden = !result.match;
     if (result.match) count++
+    makeBold(item,itemText,searchText);
   }
 
   blankData(container, count > 0);
 
+}
+
+/* 
+  Searchtext'i list içinde bold yapma 
+  Düzenli ifadedeki gi bayrağı, genel (tüm oluşumlar) ve büyük/küçük harfe duyarlı olmayan bir arama sağlar.
+*/
+function makeBold(listItem,textContent,searchText){
+  let text= textContent;
+  let replaceText = `<strong>${searchText}</strong>`;
+
+  var boldText = text.replace(new RegExp(searchText, "gi"), "<b>$&</b>");
+
+  listItem.innerHTML = boldText;
 
 }
 
@@ -93,13 +123,12 @@ function getText(item) {
   return (target.textContent || "").trim();
 }
 
-
 /* Data olmaması durumunda ekranda uyarı metni göstermek için */
 function blankData(container, status) {
   const emptyContainer = container.querySelector("[data-filter-empty-state]")
 
 
-  console.log("Status",status);
+  console.log("Status", status);
   if (emptyContainer instanceof HTMLElement) emptyContainer.hidden = status
 
 }
