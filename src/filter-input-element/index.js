@@ -3,6 +3,9 @@ const { LitElement } = require("lit");
 
 class FilterInputElement extends LitElement {
 
+  static get is(){
+    return 'filter-input-element'
+  }
   constructor() {
     super();
     this.boundFilterResults = () => {
@@ -16,11 +19,8 @@ class FilterInputElement extends LitElement {
   connectedCallback() {
     const input = this.input;
     if (!input) return
-
     this.listItemAddTextValue();
-
     input.addEventListener('input', this.boundFilterResults);
-
   }
 
 
@@ -32,7 +32,7 @@ class FilterInputElement extends LitElement {
   }
 
   /* text content değerini filter-value attribute'e atama işlemi */
-  listItemAddTextValue(){
+  listItemAddTextValue() {
     const containerValue = this.getAttribute('data-filter-container')
     const container = document.querySelector(`[data-filter-id="${containerValue}"]`);
 
@@ -40,9 +40,8 @@ class FilterInputElement extends LitElement {
       ? container
       : container.querySelector('[data-filter-list]');
 
-
-    for (const item of Array.from(listContainer.children)){
-      item.setAttribute('filter-value',item.textContent);
+    for (const item of Array.from(listContainer.children)) {
+      item.setAttribute('filter-value', item.textContent);
     }
   }
 
@@ -52,6 +51,11 @@ class FilterInputElement extends LitElement {
   get input() {
     const input = this.querySelector("input");
     return input instanceof HTMLInputElement ? input : null;
+  }
+
+  /* Kullanıcı Alanda loading isterse çalışacak. */
+  loadingEvent() {
+
   }
 }
 
@@ -85,7 +89,7 @@ async function filterResults(filterInput, check) {
     const result = filterEvent(item, itemText, searchText);
     item.hidden = !result.match;
     if (result.match) count++
-    makeBold(item,itemText,searchText);
+    makeBold(item, itemText, searchText);
   }
 
   blankData(container, count > 0);
@@ -96,8 +100,8 @@ async function filterResults(filterInput, check) {
   Searchtext'i list içinde bold yapma 
   Düzenli ifadedeki gi bayrağı, genel (tüm oluşumlar) ve büyük/küçük harfe duyarlı olmayan bir arama sağlar.
 */
-function makeBold(listItem,textContent,searchText){
-  let text= textContent;
+function makeBold(listItem, textContent, searchText) {
+  let text = textContent;
   let replaceText = `<strong>${searchText}</strong>`;
 
   var boldText = text.replace(new RegExp(searchText, "gi"), "<b>$&</b>");
@@ -128,7 +132,6 @@ function blankData(container, status) {
   const emptyContainer = container.querySelector("[data-filter-empty-state]")
 
 
-  console.log("Status", status);
   if (emptyContainer instanceof HTMLElement) emptyContainer.hidden = status
 
 }
